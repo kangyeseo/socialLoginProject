@@ -1,72 +1,34 @@
-DROP SCHEMA IF EXISTS eatja;
-CREATE SCHEMA IF NOT EXISTS eatja DEFAULT CHARACTER SET utf8;
-USE eatja;
+DROP SCHEMA IF EXISTS socialLoginProject;
+CREATE SCHEMA IF NOT EXISTS socialLoginProject DEFAULT CHARACTER SET utf8;
+USE socialLoginProject;
 
 -- --------------------------------
 
-DROP TABLE IF EXISTS user;
+DROP TABLE IF socialLoginProject.user;
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE user (
   userId VARCHAR(60),
   userName VARCHAR(20),
   profileImg VARCHAR(200),
-  followerCount INT DEFAULT 0,
-  followeeCount INT DEFAULT 0,
+  created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()<
   PRIMARY KEY(userId)
 );
 
 -- --------------------------------
 
-DROP TABLE IF EXISTS userRelation;
+INSERT INTO user (userId, userName, profileImg) VALUES
+("root", "근원", "asdfgh"),
+("park", "공원", "qwerty"),
+("rlwo", "기재", "zxcvbn"),
+("xodn", "태우", "hjklop"),
+("woals", "재민", "tyuio");
 
-CREATE TABLE IF NOT EXISTS userRelation (
-  userRelationId INT NOT NULL AUTO_INCREMENT,
-  followerId VARCHAR(60),
-  followeeId VARCHAR(60),
-  created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  PRIMARY KEY(userRelationId)
-);
 
--- --------------------------------
+SELECT userId, username FROM User ORDER BY created LIMIT 1;
 
-DROP TABLE IF EXISTS review;
+SELECT username FROM User WHERE userId = 'asd';
 
-CREATE TABLE IF NOT EXISTS review (
-  reviewId INT NOT NULL AUTO_INCREMENT,
-  userId VARCHAR(60),
-  reviewName VARCHAR(30),
-  imgUrl VARCHAR(200),
-  locationUrl VARCHAR(200),
-  tag TINYINT(1),
-  description VARCHAR(200),
-  created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  PRIMARY KEY(reviewId)
-);
+DELETE FROM User WHERE username = '박근원';
 
--- --------------------------------
-
-DROP TABLE IF EXISTS tag;
-
-CREATE TABLE IF NOT EXISTS tag (
-  tagId TINYINT(1),
-  tagName VARCHAR(10),
-  PRIMARY KEY(tagId)
-);
-
--- --------------------------------
-
-SELECT userId, username
-FROM User
-ORDER BY created DESC
-LIMIT 1;
-
-SELECT username
-FROM User
-WHERE userId = 'asd';
-
-DELETE FROM User
-WHERE username = '박근원';
-
-UPDATE User
-SET userId = 'dsa'
-WHERE username = '김기재';
+UPDATE User SET userId = 'dsa' WHERE username = '김기재';
