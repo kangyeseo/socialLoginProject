@@ -1,0 +1,1 @@
+http://localhost:3000/socialLoginProject/api/v1/ping
